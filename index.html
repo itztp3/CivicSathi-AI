@@ -1,1 +1,360 @@
+<!DOCTYPE html>
 
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CivicSathi AI - Bengaluru Urban Intelligence &amp; Civic Redressal</title>
+<!-- Google Fonts: Plus Jakarta Sans & Noto Sans Kannada -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<!-- Tailwind CSS CDN for production styling -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff4ff',
+              100: '#dbe6fe',
+              200: '#bfd3fe',
+              500: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#0f2942',
+              950: '#071626'
+            },
+            civic: {
+              surface: '#f8f9ff',
+              card: '#ffffff',
+              border: '#e2e8f0',
+              accent: '#0f2942'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Noto Sans Kannada"', 'sans-serif'],
+            kannada: ['"Noto Sans Kannada"', '"Plus Jakarta Sans"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #f8f9ff;
+      color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .active-nav-tab {
+      background-color: #0f2942 !important;
+      color: #ffffff !important;
+    }
+    .badge-pulse {
+      animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulse-ring {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans selection:bg-blue-100 selection:text-blue-900">
+<!-- TOP CIVIC DEMO BANNER -->
+<div class="bg-brand-900 text-white text-xs py-2 px-4 border-b border-brand-800">
+<div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+<div class="flex items-center space-x-2">
+<span class="inline-block w-2 h-2 rounded-full bg-emerald-400 badge-pulse"></span>
+<span class="font-medium tracking-wide" data-i18n="demo_mode_banner">Civic Tech Demo Mode • Simulated Live Bengaluru Feeds (BBMP Wards 1–198)</span>
+</div>
+<div class="flex items-center space-x-4 text-slate-300 text-xs">
+<span>BBMP Control 24×7: <strong class="text-white">1533</strong></span>
+<span class="hidden sm:inline">|</span>
+<span class="hidden sm:inline">Karnataka SAKALA Act Compliant</span>
+</div>
+</div>
+</div>
+<!-- MAIN HEADER NAVIGATION -->
+<header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<!-- Brand Logo & Name -->
+<div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dashboard')">
+<div class="w-10 h-10 rounded-xl bg-brand-900 flex items-center justify-center text-white shadow-md shadow-brand-900/20">
+<i class="w-6 h-6 text-blue-400" data-lucide="shield-check"></i>
+</div>
+<div>
+<div class="flex items-center space-x-2">
+<span class="text-lg font-extrabold tracking-tight text-brand-900">CivicSathi <span class="text-blue-600">AI</span></span>
+<span class="text-[10px] bg-blue-100 text-blue-800 font-bold px-1.5 py-0.5 rounded uppercase">BBMP Grid</span>
+</div>
+<p class="text-[11px] text-slate-500 font-medium" data-i18n="tagline">Bengaluru Urban Intelligence &amp; Redressal</p>
+</div>
+</div>
+<!-- Desktop Navigation Tabs -->
+<nav class="hidden md:flex items-center space-x-1" id="desktopNav">
+<button class="nav-btn active-nav-tab px-3.5 py-2 rounded-lg text-xs font-semibold transition-colors flex items-center space-x-2" id="nav-dashboard" onclick="switchTab('dashboard')">
+<i class="w-4 h-4" data-lucide="layout-dashboard"></i>
+<span data-i18n="nav_dashboard">Citizen Dashboard</span>
+</button>
+<button class="nav-btn text-slate-600 hover:text-brand-900 hover:bg-slate-100 px-3.5 py-2 rounded-lg text-xs font-semibold transition-colors flex items-center space-x-2" id="nav-report" onclick="switchTab('report')">
+<i class="w-4 h-4" data-lucide="plus-circle"></i>
+<span data-i18n="nav_report">Report Issue</span>
+</button>
+<button class="nav-btn text-slate-600 hover:text-brand-900 hover:bg-slate-100 px-3.5 py-2 rounded-lg text-xs font-semibold transition-colors flex items-center space-x-2" id="nav-tracking" onclick="switchTab('tracking')">
+<i class="w-4 h-4" data-lucide="activity"></i>
+<span data-i18n="nav_track">Track Grievance</span>
+</button>
+<button class="nav-btn text-slate-600 hover:text-brand-900 hover:bg-slate-100 px-3.5 py-2 rounded-lg text-xs font-semibold transition-colors flex items-center space-x-2" id="nav-ai_triage" onclick="switchTab('ai_triage')">
+<i class="w-4 h-4" data-lucide="cpu"></i>
+<span data-i18n="nav_ai">AI Analysis</span>
+</button>
+<button class="nav-btn text-slate-600 hover:text-brand-900 hover:bg-slate-100 px-3.5 py-2 rounded-lg text-xs font-semibold transition-colors flex items-center space-x-2" id="nav-authority" onclick="switchTab('authority')">
+<i class="w-4 h-4" data-lucide="building-2"></i>
+<span data-i18n="nav_authority">Authority Portal</span>
+</button>
+</nav>
+<!-- Right Side Controls: Language Toggle & Profile -->
+<div class="flex items-center space-x-2 sm:space-x-3">
+<!-- Language Toggle Switch (Kannada / English) -->
+<div class="inline-flex p-1 bg-slate-100 rounded-lg border border-slate-200">
+<button class="px-2.5 py-1 text-xs font-bold rounded-md bg-white text-brand-900 shadow-sm transition-all" id="lang-en" onclick="setLanguage('en')">
+              English
+            </button>
+<button class="px-2.5 py-1 text-xs font-semibold rounded-md text-slate-600 hover:text-brand-900 transition-all" id="lang-kn" onclick="setLanguage('kn')">
+              ಕನ್ನಡ
+            </button>
+</div>
+<!-- User Profile Mock -->
+<button class="w-9 h-9 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 hover:bg-slate-200" title="Simulated Citizen Profile">
+<i class="w-4 h-4" data-lucide="user"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Mobile Top Navigation Bar (Horizontal Scrollable) -->
+<div class="md:hidden flex items-center space-x-2 overflow-x-auto px-4 py-2 border-t border-slate-100 custom-scrollbar bg-slate-50">
+<button class="mob-nav-btn active-nav-tab px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap" id="mob-nav-dashboard" onclick="switchTab('dashboard')">Dashboard</button>
+<button class="mob-nav-btn text-slate-600 px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap" id="mob-nav-report" onclick="switchTab('report')">Report Issue</button>
+<button class="mob-nav-btn text-slate-600 px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap" id="mob-nav-tracking" onclick="switchTab('tracking')">Track Status</button>
+<button class="mob-nav-btn text-slate-600 px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap" id="mob-nav-ai_triage" onclick="switchTab('ai_triage')">AI Triage</button>
+<button class="mob-nav-btn text-slate-600 px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap" id="mob-nav-authority" onclick="switchTab('authority')">Authority Review</button>
+</div>
+</header>
+<!-- MAIN APP CONTAINER -->
+<main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+<!-- ========================================== -->
+<!-- TAB 1: CITIZEN DASHBOARD                   -->
+<!-- ========================================== -->
+<section class="space-y-8 block" id="section-dashboard">
+<!-- Welcome Hero Banner -->
+<div class="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-sm relative overflow-hidden">
+<div class="absolute -right-12 -bottom-12 w-64 h-64 bg-blue-50 rounded-full pointer-events-none opacity-60"></div>
+<div class="relative z-10 max-w-3xl">
+<div class="inline-flex items-center space-x-2 text-xs font-bold text-blue-700 bg-blue-50 px-3 py-1 rounded-full mb-3">
+<i class="w-3.5 h-3.5" data-lucide="map-pin"></i>
+<span data-i18n="hero_badge">Bengaluru Ward &amp; Citizen Grievance Hub • ವಾರ್ಡ್ ಸೇವಾ ಜಾಲ</span>
+</div>
+<h1 class="text-2xl sm:text-4xl font-extrabold text-brand-900 tracking-tight leading-tight mb-3">
+<span data-i18n="hero_title_1">Welcome to CivicSathi AI</span> <span class="text-blue-600" data-i18n="hero_title_2">/ ಸ್ವಾಗತ</span>
+</h1>
+<p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-6" data-i18n="hero_desc">
+            Empowering Bengaluru citizens to flag road hazards, solid waste accumulation, streetlight outages, and water leaks with algorithmic multi-modal verification, automated BBMP ward routing, and strict SLA tracking.
+          </p>
+<div class="flex flex-wrap gap-3">
+<button class="px-5 py-2.5 bg-brand-900 hover:bg-brand-800 text-white font-semibold text-xs sm:text-sm rounded-xl shadow-md shadow-brand-900/10 flex items-center space-x-2 transition-all" onclick="switchTab('report')">
+<i class="w-4 h-4" data-lucide="camera"></i>
+<span data-i18n="btn_lodge_complaint">Report a Civic Issue Now</span>
+</button>
+<button class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs sm:text-sm rounded-xl border border-slate-200 flex items-center space-x-2 transition-all" onclick="scrollToTracker()">
+<i class="w-4 h-4" data-lucide="search"></i>
+<span data-i18n="btn_track_existing">Track Existing Grievance</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Quick Action Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+<!-- Action 1: File Report -->
+<div class="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
+<div>
+<div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center mb-4">
+<i class="w-6 h-6" data-lucide="file-plus"></i>
+</div>
+<div class="flex items-center justify-between">
+<h3 class="font-bold text-slate-900 text-base" data-i18n="card_report_title">Report a Civic Issue</h3>
+<span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-mono">ದೂರು ದಾಖಲಿಸಿ</span>
+</div>
+<p class="text-xs text-slate-500 mt-2 leading-relaxed" data-i18n="card_report_desc">
+              Upload photos or describe road cavities, overflowing garbage, or streetlamp outages for immediate AI classification.
+            </p>
+</div>
+<button class="mt-6 w-full py-2.5 px-4 bg-slate-900 text-white text-xs font-semibold rounded-xl hover:bg-slate-800 transition-colors flex items-center justify-center space-x-2" onclick="switchTab('report')">
+<span data-i18n="btn_start_report">Start New Report</span>
+<i class="w-4 h-4" data-lucide="arrow-right"></i>
+</button>
+</div>
+<!-- Action 2: Quick Complaint Tracking -->
+<div class="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
+<div>
+<div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-4">
+<i class="w-6 h-6" data-lucide="search-check"></i>
+</div>
+<div class="flex items-center justify-between">
+<h3 class="font-bold text-slate-900 text-base" data-i18n="card_track_title">Track My Grievance</h3>
+<span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-mono">ದೂರು ಪರಿಶೀಲನೆ</span>
+</div>
+<p class="text-xs text-slate-500 mt-2 leading-relaxed" data-i18n="card_track_desc">
+              Enter your grievance ID to check BBMP Junior Engineer inspection status, assigned contractor, and SLA clock.
+            </p>
+<div class="mt-4">
+<div class="relative">
+<input class="w-full text-xs py-2 pl-3 pr-20 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 font-mono" id="quickSearchInput" placeholder="BLR-2025-XXXXX" type="text" value="BLR-2025-88419"/>
+<button class="absolute right-1 top-1 bottom-1 px-3 bg-blue-600 text-white rounded text-xs font-medium hover:bg-blue-700 transition-colors" onclick="quickLookup()">
+                  Check
+                </button>
+</div>
+</div>
+</div>
+<p class="text-[11px] text-slate-400 mt-4 flex items-center gap-1">
+<i class="w-3.5 h-3.5" data-lucide="info"></i>
+<span>Try sample ID: <code class="text-blue-600 cursor-pointer" onclick="document.getElementById('quickSearchInput').value='BLR-2025-88419'">BLR-2025-88419</code></span>
+</p>
+</div>
+<!-- Action 3: Sahaya Helpline 24x7 -->
+<div class="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
+<div>
+<div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center mb-4">
+<i class="w-6 h-6" data-lucide="headphones"></i>
+</div>
+<div class="flex items-center justify-between">
+<h3 class="font-bold text-slate-900 text-base">BBMP Sahaya Helpline</h3>
+<span class="text-xs bg-red-100 text-red-700 font-bold px-2 py-0.5 rounded">24×7 ಸಕ್ರಿಯ</span>
+</div>
+<p class="text-xs text-slate-500 mt-2 leading-relaxed" data-i18n="card_helpline_desc">
+              Need immediate human intervention or reporting hazardous road cave-ins? Reach central disaster cell directly.
+            </p>
+<div class="mt-4 space-y-2">
+<a class="flex items-center justify-between p-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 transition-colors text-xs font-semibold text-slate-800" href="tel:1533">
+<span class="flex items-center gap-2">
+<i class="w-4 h-4 text-emerald-600" data-lucide="phone-call"></i>
+                  1533 (Toll-Free Control Room)
+                </span>
+<i class="w-4 h-4 text-slate-400" data-lucide="chevron-right"></i>
+</a>
+<div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-xs font-semibold text-slate-800 flex items-center justify-between">
+<span class="flex items-center gap-2">
+<i class="w-4 h-4 text-emerald-600" data-lucide="message-square"></i>
+                  WhatsApp: +91 94806 85700
+                </span>
+<span class="text-[10px] bg-slate-200 px-1.5 py-0.5 rounded text-slate-600">Bot</span>
+</div>
+</div>
+</div>
+<span class="text-[10px] text-slate-400 mt-4 block">Official BBMP Helpline Directory • Namma Bengaluru</span>
+</div>
+</div>
+<!-- City Grievance Real-Time Metrics -->
+<div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+<div class="flex flex-wrap items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+<div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-blue-600"></span>
+<span class="text-xs font-bold uppercase tracking-wider text-slate-500" data-i18n="metrics_pretitle">Live Bengaluru City Grievance Telemetry</span>
+</div>
+<h2 class="text-xl font-bold text-slate-900" data-i18n="metrics_title">Civic Redressal Pulse across 198 Wards</h2>
+</div>
+<span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-medium" id="lastUpdatedClock">Updated 2 mins ago</span>
+</div>
+<!-- Metric Numbers -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+<div class="bg-slate-50/70 p-4 rounded-xl border border-slate-200/60">
+<span class="text-xs text-slate-500 font-medium" data-i18n="metric_active">Active Complaints</span>
+<div class="text-2xl font-extrabold text-slate-900 mt-1">12,482</div>
+<span class="text-[11px] text-blue-600 font-medium">Logged across 8 zones</span>
+</div>
+<div class="bg-slate-50/70 p-4 rounded-xl border border-slate-200/60">
+<span class="text-xs text-slate-500 font-medium" data-i18n="metric_triage">Avg AI Triage Time</span>
+<div class="text-2xl font-extrabold text-slate-900 mt-1">4.2 <span class="text-sm font-semibold text-slate-500">seconds</span></div>
+<span class="text-[11px] text-emerald-600 font-medium">98.4% auto-routed</span>
+</div>
+<div class="bg-slate-50/70 p-4 rounded-xl border border-slate-200/60">
+<span class="text-xs text-slate-500 font-medium" data-i18n="metric_resolved">Resolved This Month</span>
+<div class="text-2xl font-extrabold text-slate-900 mt-1">8,920</div>
+<span class="text-[11px] text-emerald-600 font-medium">74.8% SLA on-time</span>
+</div>
+<div class="bg-slate-50/70 p-4 rounded-xl border border-slate-200/60">
+<span class="text-xs text-slate-500 font-medium" data-i18n="metric_satisfaction">Citizen Verification</span>
+<div class="text-2xl font-extrabold text-slate-900 mt-1">88.4%</div>
+<span class="text-[11px] text-blue-600 font-medium">Verified by photo audits</span>
+</div>
+</div>
+<!-- Category Progress Breakdown -->
+<h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3" data-i18n="breakdown_heading">Top Reported Incidents in Bengaluru (Last 30 Days)</h4>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
+<div class="flex items-center justify-between text-xs font-semibold text-slate-800 mb-1.5">
+<span class="flex items-center gap-1.5"><i class="w-3.5 h-3.5 text-blue-600" data-lucide="wrench"></i> Roads &amp; Potholes</span>
+<span class="font-bold">38%</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+<div class="bg-blue-600 h-2 rounded-full" style="width: 38%"></div>
+</div>
+<span class="text-[10px] text-slate-400 mt-1.5 block">4,743 reported cases</span>
+</div>
+<div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
+<div class="flex items-center justify-between text-xs font-semibold text-slate-800 mb-1.5">
+<span class="flex items-center gap-1.5"><i class="w-3.5 h-3.5 text-amber-600" data-lucide="trash-2"></i> Garbage Dumps</span>
+<span class="font-bold">27%</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+<div class="bg-amber-600 h-2 rounded-full" style="width: 27%"></div>
+</div>
+<span class="text-[10px] text-slate-400 mt-1.5 block">3,370 reported cases</span>
+</div>
+<div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
+<div class="flex items-center justify-between text-xs font-semibold text-slate-800 mb-1.5">
+<span class="flex items-center gap-1.5"><i class="w-3.5 h-3.5 text-purple-600" data-lucide="lightbulb"></i> Streetlight Outage</span>
+<span class="font-bold">19%</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+<div class="bg-purple-600 h-2 rounded-full" style="width: 19%"></div>
+</div>
+<span class="text-[10px] text-slate-400 mt-1.5 block">2,371 reported cases</span>
+</div>
+<div class="p-3 bg-white rounded-xl border border-slate-200 shadow-sm">
+<div class="flex items-center justify-between text-xs font-semibold text-slate-800 mb-1.5">
+<span class="flex items-center gap-1.5"><i class="w-3.5 h-3.5 text-sky-600" data-lucide="droplet"></i> BWSSB Pipe Leaks</span>
+<span class="font-bold">16%</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+<div class="bg-sky-600 h-2 rounded-full" style="width: 16%"></div>
+</div>
+<span class="text-[10px] text-slate-400 mt-1.5 block">1,997 reported cases</span>
+</div>
+</div>
+</div>
+<!-- Recent Community Verified Reports Feed -->
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="text-lg font-bold text-slate-900" data-i18n="recent_feed_title">Recent Verified Reports</h3>
+<p class="text-xs text-slate-500" data-i18n="recent_feed_sub">Live incidents flagged by fellow citizens in your zone (Ward 80, 112, 150)</p>
+</div>
+<span class="text-xs font-semibold text-blue-600 cursor-pointer hover:underline" onclick="switchTab('authority')">View Authority Feed →</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 g
